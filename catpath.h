@@ -28,7 +28,17 @@
 
 # Description
 
-_todo_
+catpath.h provides a very simple, memory leak-free and easy interface for concatenate paths in C.
+
+They are plenty of other path concatenate libraries, but they (all that I'v seen) have memory leaks,
+like double malloc's and sometimes they dont have the easiest user interface.
+
+So, I decided to create my own library, in the form of a single-file C header library, that is also
+in the public domain.
+
+catpath.h is designed for ease of use, and easy to include in your project; no other license file,
+no other source files, no change to your CFLAGS, and no third-party dependencies. Just one file.
+
 
 # How to use
 
@@ -36,12 +46,18 @@ Define this:
   #define CATPATH_IMPLEMENTATION
 
 before including this header file in **one** of your C source
-files to create the implementation.
+files to create the implementation. Like:
+
+  #define <stdio.h>
+  #define ...
+  #define CATPATH_IMPLEMENTATION
+  #define "catpath.h"
+  #define ...
 
 
 # API
 
-See the begining of the header (where the function prototype start).
+See the beginning of the header (where the function prototype start).
 
 
 # CHANGELOG
@@ -68,6 +84,7 @@ Which include: (but not limited to)
 // TODO: debugging
 #include <stdio.h>
 
+// catpath will take a dereference pointer, and a file/path...
 int catpath(char** path, const char* file);
 
 #endif // CATPATH_INCLUDE__H
