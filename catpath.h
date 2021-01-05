@@ -103,7 +103,7 @@ int catpath(char** path, const char* file) {
 
   // Free, and re-malloc the correct len
   free(*path);
-  *path = (char*) malloc(strlen(file) + 2);
+  *path = (char*) malloc(strlen(original_path) + strlen(file) + 2);
   if (*path == NULL) return -1;
 
   //strcpy(ptr, tmp_path);
