@@ -79,10 +79,8 @@ int catpath(char** path, const char* file);
 
 int catpath(char** path, const char* file) {
   if (*path == NULL) {
-    *path = (char*) malloc(strlen(file) + 2);
-    if (*path == NULL) return -1;
-
-    char* ptr = *path;
+    char* ptr = (char*) malloc(strlen(file) + 2);
+    if (ptr == NULL) return -1;
 
     // Copy file to path
     unsigned int i = 0;
@@ -93,56 +91,50 @@ int catpath(char** path, const char* file) {
     }
     ptr[i] = '\0';
 
+    *path = ptr;
+
     return 0;
   }
 
-  // Get the original path, before re-malloc-ing
-  char* original_path = strdup(*path);
-//  const char* tmp_path = original_path; // If I dont do this, the function crashes on free
-//  free(original_path);
+  // Create a new pointer, this will be the pointer to the new path
+  char* new_path = (char*) malloc(strlen(*path) + strlen(file) + 2);
+  if (new_path == NULL) return -1;
 
-  // Free, and re-malloc the correct len
+  strcpy(new_path, *path);
   free(*path);
-  *path = (char*) malloc(strlen(original_path) + strlen(file) + 2);
-  if (*path == NULL) return -1;
 
-  //strcpy(ptr, tmp_path);
-  strcpy(*path, original_path);
-  free(original_path);
-
-  // For some reason, we need to create a new pointer var...
-  char* ptr = *path;
-
-  size_t path_len = strlen(ptr) - 1;
+  size_t path_len = strlen(new_path) - 1;
 
   // If the file starts with a '/', then make sure path does not start with one,
   // otherwise, add one.
   if (file[0] == '/') {
     // If theres a '/' at the suffix (which there should not be), remove it
-    if (ptr[path_len] == '/') {
-      ptr[path_len] = '\0';
+    if (new_path[path_len] == '/') {
+      new_path[path_len] = '\0';
       path_len--;
     }
   } else {
     // If theres no '/' suffix (which there should not be), then add one
-    if (ptr[path_len+1] != '/') {
-      ptr[path_len+1] = '/';
+    if (new_path[path_len+1] != '/') {
+      new_path[path_len+1] = '/';
       path_len++;
-      ptr[path_len+1] = '\0';
+      new_path[path_len+1] = '\0';
     }
   }
   // Copy file to path
   unsigned int i = path_len + 1;
   while (*file != '\0') {
-    ptr[i] = *file;
+    new_path[i] = *file;
     file++;
     i++;
   }
 
-  if (ptr[i-1] == '/') {
-    ptr[i-1] = '\0';
+  if (new_path[i-1] == '/') {
+    new_path[i-1] = '\0';
   }
-  ptr[i] = '\0';
+  new_path[i] = '\0';
+
+  *path = new_path;
 
   return 0;
 }
