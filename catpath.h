@@ -84,8 +84,38 @@ Which include: (but not limited to)
 // TODO: debugging
 #include <stdio.h>
 
-// catpath will take a dereference pointer, and a file/path...
 int catpath(char** path, const char* file);
+/*
+catpath will take a dereference pointer, and a file/path (which must be non-null). If path
+is null (which it must be when creating a new path), then it will return a new allocated
+pointer. If path is non-null (like if your adding another dir/file), then it will be freed,
+and re-alloced for the correct new size. It is your responsibility to `free()` the path pointer
+when you are done with it.
+
+Special notes:
+ - When creating the first path, you MUST init the char pointer with NULL, see the example.
+ - Make sure to call `free()` to the char pointer when you are done with it.
+ - The file argument must be null-terminated.
+
+Example:
+
+  int main() {
+    char* some_path = NULL; // You must init the first path with NULL!
+
+    // Create a new allocated pointer for `some_path` with contents of: `/starts/with/slash-and-end-with-slash` (removes the suffix '/')
+    catpath(&some_path, "/starts/with/slash-and-end-with-slash/");
+
+    // Append a path to `some_path`, will automatically free/alloc a new pointer and return it
+    catpath(&some_path, "/other/path");
+
+    // some_path contents: /starts/with/slash-and-end-with-slash/other/path
+
+    // When you are done, make sure you `free()` the path.
+    free(some_path);
+
+    return 0;
+  }
+*/
 
 #endif // CATPATH_INCLUDE__H
 
