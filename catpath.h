@@ -98,20 +98,20 @@ int catpath(char** path, const char* file) {
 
   // Get the original path, before re-malloc-ing
   char* original_path = strdup(*path);
-  const char* tmp_path = original_path; // If I dont do this, the function crashes on free
-  free(original_path);
+//  const char* tmp_path = original_path; // If I dont do this, the function crashes on free
+//  free(original_path);
 
   // Free, and re-malloc the correct len
   free(*path);
   *path = (char*) malloc(strlen(file) + 2);
   if (*path == NULL) return -1;
 
+  //strcpy(ptr, tmp_path);
+  strcpy(*path, original_path);
+  free(original_path);
+
   // For some reason, we need to create a new pointer var...
   char* ptr = *path;
-
-  strcpy(ptr, tmp_path);
-//  strcpy(ptr, original_path);
-//  free(original_path);
 
   size_t path_len = strlen(ptr) - 1;
 
