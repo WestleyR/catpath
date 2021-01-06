@@ -71,5 +71,5 @@ user    0m0.002s
 sys     0m0.003s
 ```
 
-10ms seems very good, and of course there is no memory leaks when running this.
+10ms is very good, and of course there is no memory leaks when running this.
 
