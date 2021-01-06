@@ -36,7 +36,7 @@ int main() {
 ## Memory leak test
 
 Of course, there is no memory leaks. Here is the (clipped) output of
-valgrind when running the compiled `test.c`:
+valgrind when running the compiled [`test.c`](./test.c):
 
 ```
 HEAP SUMMARY:
