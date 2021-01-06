@@ -78,11 +78,8 @@ Which include: (but not limited to)
 #ifndef CATPATH_INCLUDE__H
 #define CATPATH_INCLUDE__H
 
-#include <stdlib.h>
-#include <string.h>
-
-// TODO: debugging
-#include <stdio.h>
+#include <stdlib.h> // for malloc/free
+#include <string.h> // for strlen
 
 int catpath(char** path, const char* file);
 /*
