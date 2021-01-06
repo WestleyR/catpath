@@ -126,19 +126,25 @@ Example:
 
 int catpath(char** path, const char* file) {
   if (*path == NULL) {
-    char* ptr = (char*) malloc(strlen(file) + 2);
-    if (ptr == NULL) return -1;
+    char* new_path = (char*) malloc(strlen(file) + 2);
+    if (new_path == NULL) return -1;
 
     // Copy file to path
     unsigned int i = 0;
     while (*file != '\0') {
-      ptr[i] = *file;
+      new_path[i] = *file;
       file++;
       i++;
     }
-    ptr[i] = '\0';
 
-    *path = ptr;
+    // Remove the trailing '/', and add the null terminator
+    if (new_path[i-1] == '/') {
+      new_path[i-1] = '\0';
+    } else {
+      new_path[i] = '\0';
+    }
+
+    *path = new_path;
 
     return 0;
   }
