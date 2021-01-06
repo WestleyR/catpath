@@ -62,7 +62,7 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
-### v1.0.0 - 2021-01-06 (yet to be released)
+### v1.0.0 - 2021-01-06
  - Init release.
 
 
