@@ -35,7 +35,7 @@ int main() {
 
 ## Memory leak test
 
-Of course, there is no memory leaks. Here is the (cliped) output of
+Of course, there is no memory leaks. Here is the (clipped) output of
 valgrind when running the compiled `test.c`:
 
 ```
@@ -45,4 +45,21 @@ HEAP SUMMARY:
 
 All heap blocks were freed -- no leaks are possible
 ```
+
+## Speed
+
+See the [`extreme-test.c`](./extreme-test.c) for the source file. Which will run
+`catpath()` 1000 times. Heres how fast it is:
+
+```
+$ gcc extreme-test.c
+$ time ./a.out
+some_path: (10004 chars) [...]
+
+real    0m0.010s
+user    0m0.002s
+sys     0m0.003s
+```
+
+10ms seems very good, and of course there is no memory leaks when running this.
 
