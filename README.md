@@ -15,7 +15,7 @@ Also see the [`test.c`](./test.c) for this example.
 
 int main() {
   // You must init the first path with NULL!
-  char* some_path = NULL; // You must init the first path with NULL!
+  char* some_path = NULL;
 
   // Create a new allocated pointer for `some_path` with contents of: `/starts/with/slash-and-end-with-slash` (removes the suffix '/')
   catpath(&some_path, "/starts/with/slash-and-end-with-slash/");
@@ -36,7 +36,7 @@ int main() {
 ## Memory leak test
 
 Of course, there is no memory leaks. Here is the (cliped) output of
-valgrind when running the compuled `test.c`:
+valgrind when running the compiled `test.c`:
 
 ```
 HEAP SUMMARY:
