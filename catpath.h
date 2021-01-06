@@ -62,7 +62,7 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
-### v1.0.0 - 2021-01-04 (yet to be released)
+### v1.0.0 - 2021-01-06 (yet to be released)
  - Init release.
 
 
@@ -168,6 +168,7 @@ int catpath(char** path, const char* file) {
       new_path[path_len+1] = '\0';
     }
   }
+
   // Copy file to path
   unsigned int i = path_len + 1;
   while (*file != '\0') {
@@ -176,11 +177,14 @@ int catpath(char** path, const char* file) {
     i++;
   }
 
+  // Remove the trailing '/', and add the null terminator
   if (new_path[i-1] == '/') {
     new_path[i-1] = '\0';
+  } else {
+    new_path[i] = '\0';
   }
-  new_path[i] = '\0';
 
+  // Set the return pointer
   *path = new_path;
 
   return 0;
