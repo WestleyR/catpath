@@ -1,67 +1,24 @@
-
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>  // for printf
+#include <stdlib.h> // for free
 
 #define CATPATH_IMPLEMENTATION
 #include "catpath.h"
 
-int test1() {
-  printf("%s()\n", __func__);
+int main() {
+  // You must init the first path with NULL!
+  char* some_path = NULL; // You must init the first path with NULL!
 
-  char* path = NULL;
+  // Create a new allocated pointer for `some_path` with contents of: `/starts/with/slash-and-end-with-slash` (removes the suffix '/')
+  catpath(&some_path, "/starts/with/slash-and-end-with-slash/");
 
-  catpath(&path, "/start-and-end-with-slashes/");
-  printf("PATH: %s\n", path);
+  // Append a path to `some_path`, will automatically free/alloc a new pointer and return it
+  catpath(&some_path, "/other/path");
 
-  catpath(&path, "/plus/path/with/slashes/");
-  printf("PATH: %s\n", path);
+  printf("some_path: %s\n", some_path);
+  // some_path contents: /starts/with/slash-and-end-with-slash/other/path
 
-  free(path);
-
-  return 0;
-}
-
-int test2() {
-  printf("\n%s()\n", __func__);
-
-  char* new_path = NULL;
-
-  catpath(&new_path, "no-start-slash");
-  printf("PATH: %s\n", new_path);
-
-  catpath(&new_path, "no-leading-slash");
-  printf("PATH: %s\n", new_path);
-
-  free(new_path);
+  // When you are done, make sure you `free()` the path.
+  free(some_path);
 
   return 0;
 }
-
-int test3() {
-  printf("\n%s()\n", __func__);
-
-  char* path = NULL;
-
-  catpath(&path, "/starts-with-slash");
-  printf("PATH: %s\n", path);
-
-  catpath(&path, "/with/more/slashes/");
-  printf("PATH: %s\n", path);
-
-  free(path);
-
-  return 0;
-}
-
-
-int main(int argc, char** argv) {
-  test1();
-  test2();
-  test3();
-
-  return(0);
-}
-
-
-// vim: tabstop=2 shiftwidth=2 expandtab autoindent softtabstop=0
-
