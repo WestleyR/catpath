@@ -62,6 +62,10 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
+### v1.0.1 - 2020-01-07 (beta)
+ - Only add the '/' prefix if path is not empty
+ - Added NULL check for file
+
 ### v1.0.0 - 2021-01-07
  - Init release.
 
@@ -87,15 +91,20 @@ catpath will take a dereference pointer, and a file/path (which must be non-null
 is null (which it must be when creating a new path), then it will return a new allocated
 pointer. If path is non-null (like if your adding another dir/file), then it will be freed,
 and re-alloced for the correct new size. It is your responsibility to `free()` the path pointer
-when you are done with it.
+when you are done with it. If you empty the path pointer, and call catpath again, the file
+will be copied directly to the path, the prefix '/' follows from the file, and the suffix '/'
+will be removed if exists.
 
 Special notes:
  - When creating the first path, you MUST init the char pointer with NULL, see the example.
  - Make sure to call `free()` to the char pointer when you are done with it.
  - The file argument must be null-terminated.
+ - When creating a new path (either from a NULL, or empty allocated pointer), the prefix
+   '/' will match the file, the suffix '/' will be removed if exists.
 
 Example:
 
+```
   int main() {
     char* some_path = NULL; // You must init the first path with NULL!
 
@@ -112,6 +121,7 @@ Example:
 
     return 0;
   }
+```
 */
 
 #endif // CATPATH_INCLUDE__H
@@ -122,6 +132,11 @@ Example:
 #ifdef CATPATH_IMPLEMENTATION
 
 int catpath(char** path, const char* file) {
+  // file must not be null
+  if (file == NULL) {
+    return -1;
+  }
+
   if (*path == NULL) {
     char* new_path = (char*) malloc(strlen(file) + 2);
     if (new_path == NULL) return -1;
@@ -165,7 +180,9 @@ int catpath(char** path, const char* file) {
     }
   } else {
     // If theres no '/' suffix (which there should not be), then add one
-    if (new_path[path_len+1] != '/') {
+    // only if path is not emtpy. If it is empty, then we should treat it
+    // like a new path (only have a / prefix if file has one).
+    if (new_path[path_len+1] != '/' && new_path[0] != '\0') {
       new_path[path_len+1] = '/';
       path_len++;
       new_path[path_len+1] = '\0';
