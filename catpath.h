@@ -62,7 +62,7 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
-### v1.0.1 - 2020-01-07 (beta)
+### v1.0.1 - 2020-01-08
  - Only add the '/' prefix if path is not empty
  - Added NULL check for file
 
