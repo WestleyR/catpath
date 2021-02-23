@@ -26,6 +26,8 @@
 //
 /*
 
+Source code: https://github.com/WestleyR/catpath
+
 # Description
 
 catpath.h provides a very simple, memory leak-free and easy interface for concatenate paths in C.
@@ -42,17 +44,27 @@ no other source files, no change to your CFLAGS, and no third-party dependencies
 
 # How to use
 
-Define this:
-  #define CATPATH_IMPLEMENTATION
+There are two ways to use this library;
 
-before including this header file in **one** of your C source
-files to create the implementation. Like:
+ 1. Copy the catpath.h and catpath.c into your project. Then include
+    and compile as normal.
 
-  #define <stdio.h>
-  #define ...
-  #define CATPATH_IMPLEMENTATION
-  #define "catpath.h"
-  #define ...
+ 2. Copy only the catpath.h file into your project. Then define this:
+
+    ```
+    #define CATPATH_IMPLEMENTATION
+    ```
+
+    before including this header file in **one** of your C source
+    files to create the implementation. Like:
+
+    ``` your-c-file.c
+    #define <stdio.h>
+    #define ...
+    #define CATPATH_IMPLEMENTATION
+    #define "catpath.h"
+    #define ...
+    ```
 
 
 # API
@@ -62,7 +74,11 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
-### v1.0.1 - 2020-01-08
+### v1.1.0 - 2021-02-23 (yet to be released)
+ - Added catpath.c file for users that dont want to single-file library.
+ - Fixed date in changelog for v1.0.1 (typ0)
+
+### v1.0.1 - 2021-01-08
  - Only add the '/' prefix if path is not empty
  - Added NULL check for file
 

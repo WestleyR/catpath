@@ -1,7 +1,10 @@
 #include <stdio.h>  // for printf
 #include <stdlib.h> // for free
 
+// Only define this in **one** if you C source files if
+// you are not compiling with catpath.c
 #define CATPATH_IMPLEMENTATION
+
 #include "catpath.h"
 
 int main() {
