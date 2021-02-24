@@ -4,13 +4,27 @@ Single file C library to concatenate (join) file paths
 
 ## Install
 
-Copy the [`catpath.h`](./catpath.h) file to your project. Make sure to:
+There are two ways to use this library;
 
-```
-#define CATPATH_IMPLEMENTATION
-```
-before including the header in **one** of your C source files to create
-the implementation. See the [`catpath.h`](./catpath.h) file for details.
+ 1. Copy the [`catpath.h`](./catpath.h) and [`catpath.c`](./catpath.c) into your project. Then include
+    and compile as normal.
+
+ 2. Copy only the catpath.h file into your project. Then define this:
+
+    ```
+    #define CATPATH_IMPLEMENTATION
+    ```
+
+    before including this header file in **one** of your C source
+    files to create the implementation. Like:
+
+    ```
+    #define <stdio.h>
+    #define ...
+    #define CATPATH_IMPLEMENTATION
+    #define "catpath.h"
+    #define ...
+    ```
 
 ## Example
 

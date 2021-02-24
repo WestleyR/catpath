@@ -59,11 +59,11 @@ There are two ways to use this library;
     files to create the implementation. Like:
 
     ``` your-c-file.c
-    #define <stdio.h>
-    #define ...
+    #include <stdio.h>
+    #include ...
     #define CATPATH_IMPLEMENTATION
-    #define "catpath.h"
-    #define ...
+    #include "catpath.h"
+    #include ...
     ```
 
 
@@ -77,6 +77,7 @@ See the beginning of the header (where the function prototype start).
 ### v1.1.0 - 2021-02-23 (yet to be released)
  - Added catpath.c file for users that dont want to single-file library.
  - Fixed date in changelog for v1.0.1 (typ0)
+ - Fixed include/defines in How to use doc section (typ0)
 
 ### v1.0.1 - 2021-01-08
  - Only add the '/' prefix if path is not empty
