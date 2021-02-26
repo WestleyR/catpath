@@ -74,10 +74,12 @@ See the beginning of the header (where the function prototype start).
 
 # CHANGELOG
 
-### v1.1.0 - 2021-02-23 (yet to be released)
+### v1.1.0 - 2021-02-25 (yet to be released)
  - Added catpath.c file for users that dont want to single-file library.
- - Fixed date in changelog for v1.0.1 (typ0)
- - Fixed include/defines in How to use doc section (typ0)
+ - Dont remove the slash if only appending a "/" as the file.
+ - Fixed date in changelog for v1.0.1 (typ0).
+ - Fixed include/defines in How to use doc section (typ0).
+ - Increased the extra malloc buffer from 2 -> 4.
 
 ### v1.0.1 - 2021-01-08
  - Only add the '/' prefix if path is not empty
@@ -166,8 +168,9 @@ int catpath(char** path, const char* file) {
       i++;
     }
 
-    // Remove the trailing '/', and add the null terminator
-    if (new_path[i-1] == '/') {
+    // If the path is not just a "/", then remove the trailing "/".
+    // We dont want to remove the "/" if thats the only path we are appending.
+    if (i > 1 && new_path[i-1] == '/') {
       new_path[i-1] = '\0';
     } else {
       new_path[i] = '\0';
@@ -179,7 +182,7 @@ int catpath(char** path, const char* file) {
   }
 
   // Create a new pointer, this will be the pointer to the new path
-  char* new_path = (char*) malloc(strlen(*path) + strlen(file) + 2);
+  char* new_path = (char*) malloc(strlen(*path) + strlen(file) + 4);
   if (new_path == NULL) return -1;
 
   strcpy(new_path, *path);
@@ -199,7 +202,7 @@ int catpath(char** path, const char* file) {
     // If theres no '/' suffix (which there should not be), then add one
     // only if path is not emtpy. If it is empty, then we should treat it
     // like a new path (only have a / prefix if file has one).
-    if (new_path[path_len+1] != '/' && new_path[0] != '\0') {
+    if (new_path[path_len] != '/' && new_path[0] != '\0') {
       new_path[path_len+1] = '/';
       path_len++;
       new_path[path_len+1] = '\0';
